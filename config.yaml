@@ -1,3 +1,7 @@
+# Global project settings
+
+session_save_dir: "saved-sessions"
+
 # Mujoco environment settings
 
 mujoco_defaults: &mujoco_defaults
@@ -9,7 +13,7 @@ mujoco_defaults: &mujoco_defaults
     n_trajectories: 100
 
 swimmer:
-    env_name: Swimmer-v3
+    env_name: "Swimmer-v3"
 
     <<: *mujoco_defaults
 
@@ -18,12 +22,12 @@ swimmer:
     policy_hidden_dims: [32]
 
 hopper:
-    env_name: Hopper-v3
+    env_name: "Hopper-v3"
 
     <<: *mujoco_defaults
 
 walker2d:
-    env_name: Walker2d-v3
+    env_name: "Walker2d-v3"
 
     <<: *mujoco_defaults
 

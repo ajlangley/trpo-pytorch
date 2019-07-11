@@ -39,7 +39,8 @@ config = all_configs[model_name]
 device = get_device()
 
 # Find the input size, hidden dim sizes, and output size
-env = gym.make(config['env_name'])
+env_name = config['env_name']
+env = gym.make(env_name)
 action_space = env.action_space
 observation_space = env.observation_space
 policy_hidden_dims = config['policy_hidden_dims']
@@ -65,7 +66,6 @@ state_bound = Bound(-5, 5)
 state_filter = Transform(state_bound, z_filter)
 
 # Initialize the simulator
-env_name = config['env_name']
 n_trajectories = config['n_trajectories']
 max_timesteps = config['max_timesteps']
 try:
