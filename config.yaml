@@ -1,0 +1,32 @@
+# Mujoco environment settings
+
+mujoco_defaults: &mujoco_defaults
+    nn_type: mlp
+    vf_hidden_dims: [64, 64]
+    policy_type: gaussian
+    policy_hidden_dims: [64, 64]
+
+    max_timesteps: 1000
+    n_episodes: 200
+    n_trajectories: 100
+
+swimmer:
+    env_name: Swimmer-v3
+
+    <<: *mujoco_defaults
+
+    n_trajectories: 50
+
+    policy_hidden_dims: [32]
+
+hopper:
+    env_name: Hopper-v3
+
+    <<: *mujoco_defaults
+
+walker2d:
+    env_name: Walker2d-v3
+
+    <<: *mujoco_defaults
+
+    n_episodes: 500
