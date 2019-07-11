@@ -1,9 +1,7 @@
 # Mujoco environment settings
 
 mujoco_defaults: &mujoco_defaults
-    nn_type: mlp
     vf_hidden_dims: [64, 64]
-    policy_type: gaussian
     policy_hidden_dims: [64, 64]
 
     max_timesteps: 1000

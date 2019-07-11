@@ -1,5 +1,7 @@
 from argparse import ArgumentParser
 import gym
+from gym.spaces import Box, Discrete
+import roboschool
 from yaml import load
 
 from models import build_diag_gauss_policy, build_mlp, build_multinomial_policy
@@ -16,7 +18,9 @@ parser = ArgumentParser(prog='train.py',
                         ' with Generalized Advantage Estimation (Schulman 2016).')
 parser.add_argument('--continue', dest='continue_from_file', action='store_true',
                     help='Set this flag to continue training from a previously ' \
-                    'saved session')
+                    'saved session. Session will be overwritten if this flag is ' \
+                    'not set and a saved file associated with model-name already ' \
+                    'exists.')
 parser.add_argument('--model-name', type=str, dest='model_name', required=True,
                     help='The entry in trpo_experiments.yaml from which settings' \
                     'should be loaded.')
@@ -44,10 +48,12 @@ policy_args = (observation_space.shape[0], policy_hidden_dims, action_space.shap
 vf_args = (observation_space.shape[0] + 1, vf_hidden_dims, 1)
 
 # Initialize the policy and value function
-if config['policy_type'] == 'gaussian':
+if type(action_space) is Box:
     policy = build_diag_gauss_policy(*policy_args)
-elif config['policy_type'] == 'multinomial':
+elif type(action_space) is Discrete:
     policy = build_multinomial_policy(*policy_args)
+else:
+    raise NotImplementedError
 
 policy.to(device)
 value_fun = build_mlp(*vf_args)

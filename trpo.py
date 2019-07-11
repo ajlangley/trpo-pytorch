@@ -142,7 +142,7 @@ class TRPO:
         training iteration
     '''
     def __init__(self, policy, value_fun, simulator, max_kl_div=0.01, max_value_step=0.01,
-                vf_iters=1, vf_l2_reg_coef=1e-3, discount=0.99, lam=0.98, cg_damping=1e-3,
+                vf_iters=1, vf_l2_reg_coef=1e-3, discount=0.995, lam=0.98, cg_damping=1e-3,
                 cg_max_iters=10, line_search_coef=0.9, line_search_max_iter=10,
                 line_search_accept_ratio=0.1, model_name=None, continue_from_file=False,
                 save_every=1):
@@ -175,7 +175,7 @@ class TRPO:
             (default is 0.001)
 
         discount : float
-            the coefficient to use when discounting the rewards (discount is 0.99)
+            the coefficient to use when discounting the rewards (discount is 0.995)
 
         lam : float
             the bias reduction parameter to use when calculating advantages using GAE
