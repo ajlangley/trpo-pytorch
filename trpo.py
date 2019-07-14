@@ -235,6 +235,16 @@ class TRPO:
         self.device = get_device()
         self.mean_rewards = []
 
+        if not model_name and continue_from_file:
+            raise Exception('Argument continue_from_file to __init__ method of ' \
+                            'TRPO case was set to True but model_name was not ' \
+                            'specified.')
+
+        if not model_name and save_every:
+            raise Exception('Argument save_every to __init__ method of TRPO ' \
+                            'was set to a value greater than 0 but model_name ' \
+                            'was not specified.')
+
         if continue_from_file:
             self.load_session()
 
@@ -409,11 +419,11 @@ class TRPO:
 
         save_path = os.path.join(save_dir, self.model_name + '.pt')
 
-        ckpt = {'policy state dict': self.policy.state_dict(),
-                'value state dict': self.value_fun.state_dict(),
-                'mean rewards': self.mean_rewards,
-                'episode num': self.episode_num,
-                'elapsed time': self.elapsed_time}
+        ckpt = {'policy_state_dict': self.policy.state_dict(),
+                'value_state_dict': self.value_fun.state_dict(),
+                'mean_rewards': self.mean_rewards,
+                'episode_num': self.episode_num,
+                'elapsed_time': self.elapsed_time}
 
         if self.simulator.state_filter:
             ckpt['state_filter'] = self.simulator.state_filter
@@ -424,11 +434,11 @@ class TRPO:
         load_path = os.path.join(save_dir, self.model_name + '.pt')
         ckpt = torch.load(load_path)
 
-        self.policy.load_state_dict(ckpt['policy state dict'])
-        self.value_fun.load_state_dict(ckpt['value state dict'])
-        self.mean_rewards = ckpt['mean rewards']
-        self.episode_num = ckpt['episode num']
-        self.elapsed_time = ckpt['elapsed time']
+        self.policy.load_state_dict(ckpt['policy_state_dict'])
+        self.value_fun.load_state_dict(ckpt['value_state_dict'])
+        self.mean_rewards = ckpt['mean_rewards']
+        self.episode_num = ckpt['episode_num']
+        self.elapsed_time = ckpt['elapsed_time']
 
         try:
             self.simulator.state_filter = ckpt['state_filter']

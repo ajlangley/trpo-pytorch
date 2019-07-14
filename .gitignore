@@ -1,0 +1,11 @@
+# MacOS system files
+.DS_Store
+
+__pycache__/
+
+*.ipynb
+
+
+MUJOCO_LOG.TXT
+
+saved-sessions

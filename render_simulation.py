@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
-import gym
+from gym import make
+from gym.wrappers import Monitor
 from gym.spaces import Box, Discrete
 import numpy as np
 import os
@@ -18,12 +19,15 @@ parser.add_argument('--model-name', type=str, dest='model_name', required=True,
                     'should be loaded.')
 parser.add_argument('-T', '--max-timesteps', type=int, dest='max_timesteps', default=10e10,
                     help='The maximum number of timesteps for which to run the simulation.')
+parser.add_argument('--run-speed', type=float, dest='run_speed', default=1.0,
+                    help='The speed at which to render the simulation.')
 # parser.add_argument('--save-video', type=str, dest='video_save_file',
 #                     help='Save the video in the specified file.')
 
 args = parser.parse_args()
 model_name = args.model_name
 max_timesteps = args.max_timesteps
+run_speed= args.run_speed
 
 config_filename = 'config.yaml'
 
@@ -33,8 +37,15 @@ config = all_configs[model_name]
 device = get_device()
 
 env_name = config['env_name']
-env = gym.make(env_name)
+env = make(env_name)
 env._max_episode_steps = max_timesteps
+
+# set the rendering speed for the video. We have to render the environment first
+# so that the environment's viewer object can be created
+# env.render()
+# env.viewer._run_speed = run_speed
+
+# env = Monitor(env, './test', force=True)
 action_space = env.action_space
 observation_space = env.observation_space
 policy_hidden_dims = config['policy_hidden_dims']
@@ -55,9 +66,15 @@ if device.type is 'cuda':
 else:
     ckpt = torch.load(load_path, map_location='cpu')
 
-policy.load_state_dict(ckpt['policy state dict'])
+policy.load_state_dict(ckpt['policy_state_dict'])
 policy.to(device)
 state_filter = ckpt['state_filter']
+
+# Adjust the camera angle
+# env.viewer.cam.lookat[0], env.viewer.cam.lookat[1], env.viewer.cam.lookat[2] = [0, -1.0, 1.15]
+# env.viewer.cam.azimuth = 0
+# env.viewer.cam.elevation = -30
+# env.viewer.cam.fixedcamid = 0
 
 # Run the simulation
 policy.eval()
