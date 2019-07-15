@@ -1,0 +1,5 @@
+gym==0.12.1
+numpy==1.15.4
+roboschool
+torch==1.1.0
+yaml==3.13
