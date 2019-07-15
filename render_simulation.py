@@ -49,11 +49,12 @@ env._max_episode_steps = max_timesteps
 action_space = env.action_space
 observation_space = env.observation_space
 policy_hidden_dims = config['policy_hidden_dims']
-policy_args = (observation_space.shape[0], policy_hidden_dims, action_space.shape[0])
 
 if type(action_space) is Box:
+    policy_args = (observation_space.shape[0], policy_hidden_dims, action_space.shape[0])
     policy = build_diag_gauss_policy(*policy_args)
 elif type(action_space) is Discrete:
+    policy_args = (observation_space.shape[0], policy_hidden_dims, action_space.n)
     policy = build_multinomial_policy(*policy_args)
 else:
     raise NotImplementedError

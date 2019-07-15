@@ -7,4 +7,4 @@ An implementation of Trust Region Policy Optimization (Schulman 2015) with Gener
 * Add support for policies using either CNNs or MLPs
 * Add plots of rewards
 * Add videos of learned locomotion
-* Make requirements file
+* Add support for vine simulation as described in (Schulman 2015)

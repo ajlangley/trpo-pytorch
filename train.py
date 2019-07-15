@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 from gym import make
 from gym.spaces import Box, Discrete
-import roboschool
+# import roboschool
 from yaml import load
 
 from models import build_diag_gauss_policy, build_mlp, build_multinomial_policy
@@ -45,19 +45,21 @@ action_space = env.action_space
 observation_space = env.observation_space
 policy_hidden_dims = config['policy_hidden_dims']
 vf_hidden_dims = config['vf_hidden_dims']
-policy_args = (observation_space.shape[0], policy_hidden_dims, action_space.shape[0])
 vf_args = (observation_space.shape[0] + 1, vf_hidden_dims, 1)
 
-# Initialize the policy and value function
+# Initialize the policy
 if type(action_space) is Box:
+    policy_args = (observation_space.shape[0], policy_hidden_dims, action_space.shape[0])
     policy = build_diag_gauss_policy(*policy_args)
 elif type(action_space) is Discrete:
+    policy_args = (observation_space.shape[0], policy_hidden_dims, action_space.n)
     policy = build_multinomial_policy(*policy_args)
 else:
     raise NotImplementedError
 
-policy.to(device)
+# Initalize the value function
 value_fun = build_mlp(*vf_args)
+policy.to(device)
 value_fun.to(device)
 
 # Initialize the state transformation
