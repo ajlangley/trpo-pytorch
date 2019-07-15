@@ -1,12 +1,10 @@
 from datetime import datetime as dt
 from datetime import timedelta
-from itertools import chain
 import numpy as np
 import os
 import torch
 from torch.nn import MSELoss
 from torch.optim import LBFGS
-from torch.utils.data import Dataset, DataLoader
 from yaml import load
 
 from conjugate_gradient import cg_solver
@@ -14,7 +12,6 @@ from distribution_utils import mean_kl_first_fixed
 from hvp import get_Hvp_fun
 from line_search import line_search
 from torch_utils import apply_update, flatten, flat_grad, get_device, get_flat_params
-from trpo_datasets import PolicyDataset, ValueFunDataset
 
 config = load(open('config.yaml', 'r'))
 save_dir = config['session_save_dir']

@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-import gym
+from gym import make
 from gym.spaces import Box, Discrete
 import roboschool
 from yaml import load
@@ -40,7 +40,7 @@ device = get_device()
 
 # Find the input size, hidden dim sizes, and output size
 env_name = config['env_name']
-env = gym.make(env_name)
+env = make(env_name)
 action_space = env.action_space
 observation_space = env.observation_space
 policy_hidden_dims = config['policy_hidden_dims']
