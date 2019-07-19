@@ -14,6 +14,8 @@ mujoco_defaults: &mujoco_defaults
 
 swimmer:
     env_name: Swimmer-v3
+    # env_args:
+    #     ctrl_cost_weight: 0.00001
 
     <<: *mujoco_defaults
 
@@ -30,8 +32,6 @@ walker2d:
     env_name: Walker2d-v3
 
     <<: *mujoco_defaults
-
-    n_episodes: 500
 
 # Misc. environments
 
