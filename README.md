@@ -4,7 +4,7 @@ An implementation of Trust Region Policy Optimization (Schulman 2015) with Gener
 
 ## Results
 
-Below are this implementation's results on three different simulated locomotion tasks.
+Below are this implementation's results on three different simulated locomotion tasks, each averaged over five runs.
 
 ![alt-text-1](results/swimmer-results.png)
 ![alt-text-2](results/hopper-results.png)
