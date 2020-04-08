@@ -22,7 +22,7 @@ parser.add_argument('--continue', dest='continue_from_file', action='store_true'
                     'not set and a saved file associated with model-name already ' \
                     'exists.')
 parser.add_argument('--model-name', type=str, dest='model_name', required=True,
-                    help='The entry in trpo_experiments.yaml from which settings' \
+                    help='The entry in config.yaml from which settings' \
                     'should be loaded.')
 parser.add_argument('--simulator', dest='simulator_type', type=str, default='single-path',
                     choices=['single-path', 'vine'], help='The type of simulator' \
